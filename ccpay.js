@@ -112,10 +112,12 @@ var ccpay = (function() {
             publishableApiKey: apiKey,
             tokenMode: "callback",
             onValid: function () {
-                $(`#${btnId}`).removeAttr("disabled")
+                $(`#${btnId}`).removeAttr("disabled").find('.enabled-text').show();
+                $(`#${btnId}`).find('.disabled-text').hide();
             },
             onInvalid: function () {
-                $(`#${btnId}`).attr('disabled', true)
+                $(`#${btnId}`).attr('disabled', true).find('disabled-text').show();
+                $(`#${btnId}`).find('.enabled-text').hide();
             }
         };
         payway.createCreditCardFrame(options, createdCallback)
@@ -356,7 +358,8 @@ var ccpay = (function() {
                     $('<div class="col" />').append(
                         $(`<Button class="btn btn-primary btn-lg" id="${btnId}" disabled/>`)
                             .append($('<i class="fas fa-spinner fa-pulse loading-icon" />').css('display', 'none'))
-                            .append(' Submit')
+                            .append($('<span class="disabled-text"/>').append(' This button will be enabled after correct credit card details provided.'))
+                            .append($('<span class="enabled-text"/>').css('display', 'none').append(' Submit'))
                             .click((e) => submitForm(e))
                     )
                 )
