@@ -4,6 +4,7 @@ var ccpay = (function() {
 
 
     const apiKey = "T14199_PUB_xvpt6bumyaqjakzarbqtrtuw2qn4mutnesmf9xgjkdgmdtwjhin2mu9u6z6w";
+    // const apiEndPoint = "http://localhost/api/cp/donation";
     const apiEndPoint = "https://devtest.mentonegirls.vic.edu.au/api/cp/donation";
 
     let creditCardFrame = null;
@@ -14,6 +15,7 @@ var ccpay = (function() {
         message: '',
         errors: {}
     };
+    const msg = `For any queries regarding your donation, please do not hesitate to contact Roslyn Holloway, Advancement Manager (<a href="mailto:rholloway@mentonegirls.vic.edu.au">rholloway@mentonegirls.vic.edu.au</a> / <a href="tel:+61 3 9581 1263">9581 1263</a>`;
     const initialData = {
         submitting: undefined,
         first_name: '',
@@ -63,7 +65,7 @@ var ccpay = (function() {
         const msgDiv = $('<div class="alert alert-success" />')
             .append($('<h3 class="alert-heading"/>').append('Thank you!'))
             .append($('<p />').append(`Thank you very much for your kind donation to the School.`))
-            .append($('<p />').append(`For any queries regarding your donation, please do not hesitate to contact Roslyn Holloway, Advancement Manager (<a href="mailto:rholloway@mentonegirls.vic.edu.au">rholloway@mentonegirls.vic.edu.au</a> / <a href="tel:+61 3 9581 1263">9581 1263</a>)`))
+            .append($('<p />').append(msg))
         $('#' + wrapperHTMLId).replaceWith($('<div class="container-fluid" />').append(msgDiv));
     };
 
@@ -299,6 +301,13 @@ var ccpay = (function() {
         return $('<div class="container-fluid" />')
             .append(
                 $('<div class="row" />').append(
+                    $('<div class="col" />').append(
+                        $(`<div class="alert alert-light"/>`).append(msg)
+                    )
+                )
+            )
+            .append(
+                $('<div class="row" />').append(
                     $('<div class="col-sm-6" />').append(getInput('First Name', 'first_name', 'First Name', true))
                 ).append(
                     $('<div class="col-sm-6" />').append(getInput('Last Name', 'last_name', 'Last Name', true))
@@ -351,7 +360,9 @@ var ccpay = (function() {
                             .click((e) => submitForm(e))
                     )
                 )
-            ).wrap($('<div class="form" />'));
+
+            )
+            .wrap($('<div class="form" />'));
     };
 
     const postInit = (id) => {
